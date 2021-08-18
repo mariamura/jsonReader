@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class StartProgram {
     public static void main(String[] args) throws ParseException {
+        
         Type targetClassType = new TypeToken<Ticket>() { }.getType();
         Ticket ticket = new Gson().fromJson(utils.readFile("tickets.json"), targetClassType);
         ArrayList<TicketValue> ticketValues = new ArrayList<>(ticket.tickets);
@@ -22,19 +23,22 @@ public class StartProgram {
                 .average()
                 .orElse(0.0);
 
-        Date average = new SimpleDateFormat("mm").parse(String.valueOf(averTime));
-        SimpleDateFormat hours = new SimpleDateFormat("HH");
-        SimpleDateFormat minutes = new SimpleDateFormat("mm");
 
         System.out.println("Среднее время полета между городами Владивосток и Тель-Авив: "
-                        + hours.format(average) + " часов "
-                        + minutes.format(average) + " минуты");
+                        + convertMinutes(averTime));
 
         System.out.println("90-й процентиль времени полета между городами Владивосток и Тель-Авив: "
-                        + calculatePercentile(vlTtel, 90));
+                        + convertMinutes(calculatePercentile(vlTtel, 90)));
     }
 
-    public static long calculatePercentile(List<Long> list, double percentile) {
+    public static String convertMinutes(Double value) throws ParseException {
+        Date average = new SimpleDateFormat("mm").parse(String.valueOf(value));
+        SimpleDateFormat hours = new SimpleDateFormat("HH");
+        SimpleDateFormat minutes = new SimpleDateFormat("mm");
+        return hours.format(average) + ":" + minutes.format(average);
+    }
+
+    public static double calculatePercentile(List<Long> list, double percentile) {
         Collections.sort(list);
         return list.get((int) Math.round(percentile/100 * (list.size() - 1)));
     }
