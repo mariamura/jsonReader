@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class utils {
-    static final String path = "src\\main\\resources\\";
+    static final String path = "src//main//resources//";
 
     public static String readFile(String fileName) {
         String fileContent = "";
@@ -17,7 +17,7 @@ public class utils {
         return fileContent;
     }
     public static String getPath(String fileName) {
-        File f = new File(path + "\\" + fileName);
+        File f = new File(path + "//" + fileName);
         return f.getAbsolutePath();
     }
 }

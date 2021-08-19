@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class StartProgram {
     public static void main(String[] args) throws ParseException {
-        
+
         Type targetClassType = new TypeToken<Ticket>() { }.getType();
         Ticket ticket = new Gson().fromJson(utils.readFile("tickets.json"), targetClassType);
         ArrayList<TicketValue> ticketValues = new ArrayList<>(ticket.tickets);
